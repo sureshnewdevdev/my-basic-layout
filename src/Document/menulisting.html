@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>React App Layout Tutorial</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      color: #333;
+    }
+    pre {
+      background-color: #f8f8f8;
+      padding: 10px;
+      overflow: auto;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    code {
+      font-family: Consolas, "Courier New", monospace;
+    }
+  </style>
+</head>
+<body>
+
+<h1>React App Layout Tutorial</h1>
+<p>
+This document explains how to create a basic React app with a top bar, a left menu (sidebar), 
+and a body that changes content based on the clicked menu item.
+</p>
+
+<hr />
+
+<h2>1. Create a New React App (Optional)</h2>
+<p>
+If you haven’t already, create a new React project using <strong>Create React App</strong> (CRA):
+</p>
+
+<pre><code>npx create-react-app my-basic-layout
+cd my-basic-layout
+npm start
+</code></pre>
+
+<p>
+This sets up a basic project structure and opens the dev server at <em>http://localhost:3000</em> (by default).
+</p>
+
+<hr />
+
+<h2>2. Project Structure</h2>
+<p>
+We’ll create a simple component structure:
+</p>
+
+<pre><code>src
+├─ components
+│  ├─ TopBar.js
+│  ├─ LeftMenu.js
+│  ├─ Body.js
+│  ├─ PageOne.js
+│  ├─ PageTwo.js
+│  └─ PageThree.js
+└─ App.js
+</code></pre>
+
+<p>Here’s what each file does:</p>
+<ul>
+  <li><strong>TopBar.js</strong>: Renders a simple header at the top of the screen.</li>
+  <li><strong>LeftMenu.js</strong>: Renders the left menu with clickable items.</li>
+  <li><strong>Body.js</strong>: Displays the main content, which changes based on which menu item was clicked.</li>
+  <li><strong>PageOne.js, PageTwo.js, PageThree.js</strong>: Simple components that show different content when the corresponding menu item is clicked.</li>
+  <li><strong>App.js</strong>: The root component that holds everything together.</li>
+</ul>
+
+<hr />
+
+<h2>3. Implement the Top Bar</h2>
+
+<p><strong>File: <code>TopBar.js</code></strong></p>
+
+<pre><code>import React from 'react';
+
+function TopBar() {
+  return (
+    &lt;header style={styles.header}&gt;
+      &lt;h1 style={styles.title}&gt;My React Layout&lt;/h1&gt;
+    &lt;/header&gt;
+  );
+}
+
+const styles = {
+  header: {
+    backgroundColor: '#3f51b5',
+    padding: '1rem',
+    color: '#fff',
+    textAlign: 'center',
+  },
+  title: {
+    margin: 0,
+  },
+};
+
+export default TopBar;
+</code></pre>
+
+<p><strong>Explanation</strong></p>
+<ul>
+  <li>We create a <code>TopBar</code> functional component that returns a simple <code>header</code> with a title.</li>
+  <li>Inline styles are used here for simplicity. (You could use a CSS file or styled-components instead.)</li>
+</ul>
+
+<hr />
+
+<h2>4. Implement the Left Menu (Sidebar)</h2>
+
+<p><strong>File: <code>LeftMenu.js</code></strong></p>
+
+<pre><code>import React from 'react';
+
+function LeftMenu({ onSelect }) {
+  return (
+    &lt;aside style={styles.sidebar}&gt;
+      &lt;ul style={styles.menu}&gt;
+        &lt;li style={styles.menuItem} onClick={() =&gt; onSelect('pageOne')}&gt;Page One&lt;/li&gt;
+        &lt;li style={styles.menuItem} onClick={() =&gt; onSelect('pageTwo')}&gt;Page Two&lt;/li&gt;
+        &lt;li style={styles.menuItem} onClick={() =&gt; onSelect('pageThree')}&gt;Page Three&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/aside&gt;
+  );
+}
+
+const styles = {
+  sidebar: {
+    backgroundColor: '#f0f0f0',
+    width: '200px',
+    padding: '1rem',
+  },
+  menu: {
+    listStyleType: 'none',
+    padding: 0,
+  },
+  menuItem: {
+    marginBottom: '1rem',
+    cursor: 'pointer',
+  },
+};
+
+export default LeftMenu;
+</code></pre>
+
+<p><strong>Explanation</strong></p>
+<ul>
+  <li><code>LeftMenu</code> receives a prop called <code>onSelect</code>. When a menu item is clicked, it calls <code>onSelect</code> with a string (e.g., <code>'pageOne'</code>).</li>
+  <li>We’ll store that string in the <strong>parent component’s state</strong> (in <code>App.js</code>) and use it to determine which page to render.</li>
+</ul>
+
+<hr />
+
+<h2>5. Create Sample Page Components</h2>
+<p>
+We’ll make three simple components that display different text. In a real app, these could be more complex pages.
+</p>
+
+<h3>5.1 <code>PageOne.js</code></h3>
+
+<pre><code>import React from 'react';
+
+function PageOne() {
+  return &lt;div style={styles.container}&gt;This is Page One&lt;/div&gt;;
+}
+
+const styles = {
+  container: {
+    padding: '1rem',
+  },
+};
+
+export default PageOne;
+</code></pre>
+
+<h3>5.2 <code>PageTwo.js</code></h3>
+
+<pre><code>import React from 'react';
+
+function PageTwo() {
+  return &lt;div style={styles.container}&gt;This is Page Two&lt;/div&gt;;
+}
+
+const styles = {
+  container: {
+    padding: '1rem',
+  },
+};
+
+export default PageTwo;
+</code></pre>
+
+<h3>5.3 <code>PageThree.js</code></h3>
+
+<pre><code>import React from 'react';
+
+function PageThree() {
+  return &lt;div style={styles.container}&gt;This is Page Three&lt;/div&gt;;
+}
+
+const styles = {
+  container: {
+    padding: '1rem',
+  },
+};
+
+export default PageThree;
+</code></pre>
+
+<p><strong>Explanation</strong></p>
+<ul>
+  <li>Each component is just a <code>div</code> with some text for demonstration.</li>
+  <li>We’re using inline styling for simplicity.</li>
+</ul>
+
+<hr />
+
+<h2>6. Implement the Body Component</h2>
+
+<p><strong>File: <code>Body.js</code></strong></p>
+
+<pre><code>import React from 'react';
+import PageOne from './PageOne';
+import PageTwo from './PageTwo';
+import PageThree from './PageThree';
+
+function Body({ selectedPage }) {
+  // Decide which component to show based on selectedPage
+  let content;
+  switch (selectedPage) {
+    case 'pageOne':
+      content = &lt;PageOne /&gt;;
+      break;
+    case 'pageTwo':
+      content = &lt;PageTwo /&gt;;
+      break;
+    case 'pageThree':
+      content = &lt;PageThree /&gt;;
+      break;
+    default:
+      content = &lt;PageOne /&gt;; // Default page
+  }
+
+  return &lt;div style={styles.bodyContainer}&gt;{content}&lt;/div&gt;;
+}
+
+const styles = {
+  bodyContainer: {
+    flex: 1, // expand to fill the rest of the space
+    padding: '1rem',
+  },
+};
+
+export default Body;
+</code></pre>
+
+<p><strong>Explanation</strong></p>
+<ul>
+  <li>The <code>Body</code> component receives <code>selectedPage</code> from the parent (<code>App.js</code>) and uses a <code>switch</code> statement to decide which sub-component (<code>PageOne</code>, <code>PageTwo</code>, or <code>PageThree</code>) to render.</li>
+  <li>If no valid <code>selectedPage</code> is set, it defaults to <code>PageOne</code>.</li>
+</ul>
+
+<hr />
+
+<h2>7. Put It All Together in <code>App.js</code></h2>
+
+<p>
+Finally, we tie everything together in the root component.
+</p>
+
+<p><strong>File: <code>App.js</code></strong></p>
+
+<pre><code>import React, { useState } from 'react';
+import TopBar from './components/TopBar';
+import LeftMenu from './components/LeftMenu';
+import Body from './components/Body';
+
+function App() {
+  // State to keep track of which page is selected
+  const [selectedPage, setSelectedPage] = useState('pageOne');
+
+  const handleSelectPage = (pageName) => {
+    setSelectedPage(pageName);
+  };
+
+  return (
+    &lt;div style={styles.appContainer}&gt;
+      {/* Top Bar */}
+      &lt;TopBar /&gt;
+
+      {/* Main Container: Left Menu + Body */}
+      &lt;div style={styles.mainContainer}&gt;
+        &lt;LeftMenu onSelect={handleSelectPage} /&gt;
+        &lt;Body selectedPage={selectedPage} /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+
+const styles = {
+  appContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh', // full viewport height
+  },
+  mainContainer: {
+    display: 'flex',
+    flex: 1, // Fill remaining space after top bar
+    flexDirection: 'row',
+  },
+};
+
+export default App;
+</code></pre>
+
+<p><strong>Explanation</strong></p>
+<ol>
+  <li><strong>State</strong>: <code>selectedPage</code> is managed by <code>App</code>. Its initial value is <code>'pageOne'</code>.</li>
+  <li><strong>handleSelectPage</strong>: This function updates the <code>selectedPage</code> based on which menu item is clicked.</li>
+  <li><strong>Layout (Flexbox)</strong>:  
+    <ul>
+      <li><code>appContainer</code> is a column flex container to stack the <code>TopBar</code> and the main content vertically.</li>
+      <li><code>mainContainer</code> is a row flex container to position <code>LeftMenu</code> and <code>Body</code> side by side.</li>
+    </ul>
+  </li>
+  <li>We pass two props:
+    <ul>
+      <li><code>onSelect=&#123;handleSelectPage&#125;</code> to <code>LeftMenu</code>.</li>
+      <li><code>selectedPage=&#123;selectedPage&#125;</code> to <code>Body</code>.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h2>8. Run the App</h2>
+<ol>
+  <li>Open a terminal in your project’s directory.</li>
+  <li>Run:
+<pre><code>npm start
+</code></pre>
+  </li>
+  <li>Open <em>http://localhost:3000</em> in your browser.</li>
+  <li>You should see:
+    <ul>
+      <li>A top header saying <strong>My React Layout</strong>.</li>
+      <li>A left menu with <strong>Page One</strong>, <strong>Page Two</strong>, and <strong>Page Three</strong>.</li>
+      <li>The body area initially showing <strong>This is Page One</strong>.</li>
+    </ul>
+  </li>
+  <li>Click on <strong>Page Two</strong> or <strong>Page Three</strong> in the left menu, and watch how the body content changes.</li>
+</ol>
+
+<hr />
+
+<h2>9. Further Enhancements</h2>
+<ul>
+  <li><strong>Styling</strong>: Replace inline styles with external CSS files, SASS, or a CSS-in-JS library (like styled-components).</li>
+  <li><strong>Routing</strong>: Use a routing library such as <strong>React Router</strong> if you need URL-based navigation for each page.</li>
+  <li><strong>State Management</strong>: For larger apps, consider using Redux, Zustand, or other state management libraries.</li>
+  <li><strong>Responsive Design</strong>: Adjust the layout for mobile screens using media queries or responsive frameworks.</li>
+</ul>
+
+<hr />
+
+<h1>Conclusion</h1>
+<p>
+You now have a basic React application with:
+</p>
+<ul>
+  <li>A <strong>top header</strong> (<code>TopBar.js</code>)</li>
+  <li>A <strong>left sidebar</strong> (<code>LeftMenu.js</code>) with clickable items</li>
+  <li>A <strong>main body</strong> (<code>Body.js</code>) that changes its content based on the selected menu item</li>
+</ul>
+<p>
+Use this skeleton as a starting point and customize it to build your own layout and components.
+</p>
+
+</body>
+</html>
